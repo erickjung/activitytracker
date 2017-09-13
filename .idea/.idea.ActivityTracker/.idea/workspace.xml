@@ -2,7 +2,7 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="f8cb586b-c503-4ac4-a1d6-eea195f24e55" name="Default" comment="">
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/.idea/.idea.ActivityTracker/.idea/vcs.xml" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/ActivityTracker.OSX/Class1.cs" afterPath="$PROJECT_DIR$/ActivityTracker.OSX/Class1.cs" />
     </list>
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
     <option name="TRACKING_ENABLED" value="true" />
@@ -30,25 +30,12 @@
       <file leaf-file-name="Class1.cs" pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/ActivityTracker.OSX/Class1.cs">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="105">
-              <caret line="7" column="1" lean-forward="false" selection-start-line="7" selection-start-column="1" selection-end-line="7" selection-end-column="1" />
+            <state relative-caret-position="2160">
+              <caret line="144" column="2" lean-forward="true" selection-start-line="144" selection-start-column="2" selection-end-line="144" selection-end-column="2" />
               <folding>
-                <marker date="1505319492000" expanded="true" signature="44:84" ph="{...}" />
-                <marker date="1505319492000" expanded="true" signature="70:82" ph="{...}" />
-              </folding>
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="Program.cs" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/ActivityTracker.Test.Console/Program.cs">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="165">
-              <caret line="11" column="1" lean-forward="false" selection-start-line="11" selection-start-column="1" selection-end-line="11" selection-end-column="1" />
-              <folding>
-                <marker date="1505319372000" expanded="true" signature="53:194" ph="{...}" />
-                <marker date="1505319372000" expanded="true" signature="73:192" ph="{...}" />
-                <marker date="1505319372000" expanded="true" signature="119:186" ph="{...}" />
+                <marker date="1505330933000" expanded="true" signature="44:84" ph="{...}" />
+                <marker date="1505330933000" expanded="true" signature="70:82" ph="{...}" />
+                <marker date="1505330933000" expanded="true" signature="86:7579" ph="/* using System; ... */" />
               </folding>
             </state>
           </provider>
@@ -77,7 +64,6 @@
     <setting file="file://$PROJECT_DIR$/ActivityTracker.Test.CLI/Program.cs" root0="FORCE_HIGHLIGHTING" />
     <setting file="file://$PROJECT_DIR$/ActivityTracker/Class1.cs" root0="FORCE_HIGHLIGHTING" />
     <setting file="file://$PROJECT_DIR$/ActivityTracker.OSX/Class1.cs" root0="FORCE_HIGHLIGHTING" />
-    <setting file="file://$PROJECT_DIR$/ActivityTracker.Test.Console/Program.cs" root0="FORCE_HIGHLIGHTING" />
   </component>
   <component name="IdeDocumentHistory">
     <option name="CHANGED_PATHS">
@@ -267,12 +253,12 @@
       <option name="presentableId" value="Default" />
       <updated>1505318880300</updated>
       <workItem from="1505318881786" duration="65000" />
-      <workItem from="1505318988561" duration="556000" />
+      <workItem from="1505318988561" duration="1251000" />
     </task>
     <servers />
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="621000" />
+    <option name="totallyTimeSpent" value="1316000" />
   </component>
   <component name="TodoView">
     <todo-panel id="selected-file">
@@ -347,11 +333,7 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="165">
           <caret line="11" column="1" lean-forward="false" selection-start-line="11" selection-start-column="1" selection-end-line="11" selection-end-column="1" />
-          <folding>
-            <marker date="1505319372000" expanded="true" signature="53:194" ph="{...}" />
-            <marker date="1505319372000" expanded="true" signature="73:192" ph="{...}" />
-            <marker date="1505319372000" expanded="true" signature="119:186" ph="{...}" />
-          </folding>
+          <folding />
         </state>
       </provider>
     </entry>
@@ -369,11 +351,12 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/ActivityTracker.OSX/Class1.cs">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="105">
-          <caret line="7" column="1" lean-forward="false" selection-start-line="7" selection-start-column="1" selection-end-line="7" selection-end-column="1" />
+        <state relative-caret-position="2160">
+          <caret line="144" column="2" lean-forward="true" selection-start-line="144" selection-start-column="2" selection-end-line="144" selection-end-column="2" />
           <folding>
-            <marker date="1505319492000" expanded="true" signature="44:84" ph="{...}" />
-            <marker date="1505319492000" expanded="true" signature="70:82" ph="{...}" />
+            <marker date="1505330933000" expanded="true" signature="44:84" ph="{...}" />
+            <marker date="1505330933000" expanded="true" signature="70:82" ph="{...}" />
+            <marker date="1505330933000" expanded="true" signature="86:7579" ph="/* using System; ... */" />
           </folding>
         </state>
       </provider>
