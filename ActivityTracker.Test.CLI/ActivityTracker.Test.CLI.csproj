@@ -7,4 +7,7 @@
     <ProjectReference Include="..\ActivityTracker.OSX\ActivityTracker.OSX.csproj" />
     <ProjectReference Include="..\ActivityTracker\ActivityTracker.csproj" />
   </ItemGroup>
+  <ItemGroup>
+    <PackageReference Include="Newtonsoft.Json" Version="10.0.3" />
+  </ItemGroup>
 </Project>
