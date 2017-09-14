@@ -5,7 +5,7 @@ namespace ActivityTracker.Test.CLI
 {
     class Program
     {
-        static void Main(string[] args)
+        static void Main()
         {
             var t = new Tracker();
             var snapShot = t.Now();
@@ -13,7 +13,7 @@ namespace ActivityTracker.Test.CLI
             Console.WriteLine("--- ALL PROCESS ---");
             foreach (var snap in snapShot.Processes)
             {
-                Console.WriteLine(string.Format("{0} - {1}", snap.Value.ID, snap.Value.Name));
+                Console.WriteLine(string.Format("{0} - {1}", snap.Value.Id, snap.Value.Name));
             }
             Console.WriteLine("------");
             Console.WriteLine("--- ACTIVE WINDOW ---");
@@ -25,7 +25,7 @@ namespace ActivityTracker.Test.CLI
             {
                 foreach (var win in snap.Value.Windows)
                 {
-                    Console.WriteLine(string.Format("{0} - {1} -> {2} - {3}", snap.Value.ID, snap.Value.Name, win.Value.ID, win.Value.Name));
+                    Console.WriteLine(string.Format("{0} - {1} -> {2} - {3}", snap.Value.Id, snap.Value.Name, win.Value.Id, win.Value.Name));
                 }
             }
             Console.WriteLine("------");

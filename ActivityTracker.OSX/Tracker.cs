@@ -8,7 +8,7 @@ namespace ActivityTracker.OSX
 {
     public class Tracker : ITracker
     {
-        private const string allWindowsScript = "tell application \"System Events\"\n" +
+        private const string AllWindowsScript = "tell application \"System Events\"\n" +
                                                 "   set listOfProcesses to (every application process where background only is false)\n" +
                                                 "end tell\n" +
                                                 "repeat with proc in listOfProcesses\n" +
@@ -24,7 +24,7 @@ namespace ActivityTracker.OSX
                                                 "   end try\n" +
                                                 "end repeat";
 
-        private const string activeWindowsScript = "tell application \"System Events\"\n" +
+        private const string ActiveWindowsScript = "tell application \"System Events\"\n" +
                                                    "   set proc to (first application process whose frontmost is true)\n" +
                                                    "end tell\n" +
                                                    "try\n" +
@@ -60,7 +60,7 @@ namespace ActivityTracker.OSX
                 {
                     throw new InvalidDataException();
                 }
-                
+
                 var procId = Convert.ToInt64(parts[1]);
                 var procName = parts[2];
 
@@ -68,49 +68,43 @@ namespace ActivityTracker.OSX
                 {
                     var proc = new SnapshotProcess
                     {
-                        ID = procId,
+                        Id = procId,
                         Name = procName,
                         Windows = new Dictionary<long, SnapshotWindow>()
                     };
 
-                    if (proc.ID != -1 && !snapList.ContainsKey(proc.ID))
+                    if (proc.Id != -1 && !snapList.ContainsKey(proc.Id))
                     {
-                        snapList.Add(proc.ID, proc);
+                        snapList.Add(proc.Id, proc);
                     }
                 }
-                else 
+                else
                 {
                     var winId = Convert.ToInt64(parts[4]);
                     var winName = parts[5];
 
                     var win = new SnapshotWindow
                     {
-                        ID = winId,
-                        Name = winName,
+                        Id = winId,
+                        Name = winName
                     };
 
                     var proc = snapList[procId];
 
-                    if (win.ID != -1 && !proc.Windows.ContainsKey(win.ID))
+                    if (win.Id != -1 && !proc.Windows.ContainsKey(win.Id))
                     {
-                        proc.Windows.Add(win.ID, win);
+                        proc.Windows.Add(win.Id, win);
                     }
                 }
             }
-            
+
             return snapList;
         }
 
         private long ParseActiveWindow()
         {
-            var list = Execute(activeWindowsScript);
-
-            if (list.Count <= 0)
-            {
-                return -1;
-            }
-
-            return list.First().Value.ID;
+            var list = Execute(ActiveWindowsScript);
+            return list.Count <= 0 ? -1 : list.First().Value.Id;
         }
 
         public Snapshot Now()
@@ -118,7 +112,7 @@ namespace ActivityTracker.OSX
             return new Snapshot
             {
                 Time = DateTime.Now,
-                Processes = Execute(allWindowsScript),
+                Processes = Execute(AllWindowsScript),
                 ActiveWindow = ParseActiveWindow()
             };
         }
