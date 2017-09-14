@@ -1,7 +1,11 @@
-<Project Sdk="Microsoft.NET.Sdk">
-
+﻿<Project Sdk="Microsoft.NET.Sdk">
   <PropertyGroup>
     <TargetFramework>netstandard2.0</TargetFramework>
   </PropertyGroup>
-
+  <ItemGroup>
+    <ProjectReference Include="..\ActivityTracker\ActivityTracker.csproj">
+      <Project>{0881B7C8-B99F-4BCC-8098-3DDF9082E9F2}</Project>
+      <Name>ActivityTracker</Name>
+    </ProjectReference>
+  </ItemGroup>
 </Project>
