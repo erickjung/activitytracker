@@ -35,19 +35,6 @@ namespace ActivityTracker.OSX
                                                    "   log \"WINDOW|\" & (id of proc) & \"|\" & (name of first window of proc)\n" +
                                                    "end try";
 
-        private const string visibleWindowsScript = "tell application \"System Events\"\n" +
-                                                    "   set listOfProcesses to (every process whose visible is true)\n" +
-                                                    "end tell\n" +
-                                                    "repeat with proc in listOfProcesses\n" +
-                                                    "   set procName to (name of proc)\n" +
-                                                    "   set procID to (id of proc)\n" +
-                                                    "   log \"PROCESS|\" & procID & \"|\" & procName\n" +
-                                                    "   set app_windows to (every window of proc)\n" +
-                                                    "   repeat with each_window in app_windows\n" +
-                                                    "      log \"WINDOW|-1|\" & (name of each_window) as string\n" +
-                                                    "   end repeat\n" +
-                                                    "end repeat";
-
         private Dictionary<long, SnapshotProcess> Execute(string command)
         {
             var process = new Process
@@ -92,25 +79,6 @@ namespace ActivityTracker.OSX
             return snapList;
         }
 
-        private Dictionary<long, SnapshotProcess> ParseAllProcesses()
-        {
-            var list = Execute(allWindowsScript);
-
-            var visibleProcess = Execute(visibleWindowsScript);
-            foreach (var proc in list)
-            {
-                foreach (var visible in visibleProcess)
-                {
-                    if (proc.Value.Name.Equals(visible.Value.Name))
-                    {
-                        proc.Value.Visible = true;
-                    }
-                }
-            }
-
-            return list;
-        }
-
         private long ParseActiveWindow()
         {
             var list = Execute(activeWindowsScript);
@@ -128,7 +96,7 @@ namespace ActivityTracker.OSX
             return new Snapshot
             {
                 Time = DateTime.Now,
-                Process = ParseAllProcesses(),
+                Process = Execute(allWindowsScript),
                 ActiveWindow = ParseActiveWindow()
             };
         }
