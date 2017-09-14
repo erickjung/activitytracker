@@ -6,7 +6,7 @@ namespace ActivityTracker
     public class Snapshot
     {
         public DateTime Time { get; set; }
-        public Dictionary<long, SnapshotProcess> Process { get; set; }
+        public Dictionary<long, SnapshotProcess> Processes { get; set; }
         public long ActiveWindow { get; set; }
     }
 }

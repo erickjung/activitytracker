@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Diagnostics;
+using System.IO;
 using System.Linq;
 
 namespace ActivityTracker.OSX
@@ -17,7 +18,7 @@ namespace ActivityTracker.OSX
                                                 "   try\n" +
                                                 "      tell application procName\n" +
                                                 "         repeat with i from 1 to (count windows)\n" +
-                                                "            log \"WINDOW|\" & (id of window i) & \"|\" & (name of window i) as string\n" +
+                                                "            log \"PROCESS|\" & procID & \"|\" & procName & \"|WINDOW|\" & (id of window i) & \"|\" & (name of window i) as string\n" +
                                                 "         end repeat\n" +
                                                 "      end tell\n" +
                                                 "   end try\n" +
@@ -26,13 +27,8 @@ namespace ActivityTracker.OSX
         private const string activeWindowsScript = "tell application \"System Events\"\n" +
                                                    "   set proc to (first application process whose frontmost is true)\n" +
                                                    "end tell\n" +
-                                                   "set procName to (name of proc)\n" +
                                                    "try\n" +
-                                                   "   tell application procName\n" +
-                                                   "      log \"WINDOW|\" & (id of window 1) & \"|\" & (name of window 1)\n" +
-                                                   "   end tell\n" +
-                                                   "on error e\n" +
-                                                   "   log \"WINDOW|\" & (id of proc) & \"|\" & (name of first window of proc)\n" +
+                                                   "   log \"PROCESS|\" & (id of proc) & \"|\" & (name of proc)\n" +
                                                    "end try";
 
         private Dictionary<long, SnapshotProcess> Execute(string command)
@@ -60,14 +56,21 @@ namespace ActivityTracker.OSX
                 var line = process.StandardError.ReadLine();
                 var parts = line.Split('|');
 
-                if (parts.Length > 2)
+                if (parts.Length < 2)
+                {
+                    throw new InvalidDataException();
+                }
+                
+                var procId = Convert.ToInt64(parts[1]);
+                var procName = parts[2];
+
+                if (parts.Length < 4)
                 {
                     var proc = new SnapshotProcess
                     {
-                        Type = parts[0],
-                        ID = long.Parse(parts[1]),
-                        Name = parts[2],
-                        Visible = false
+                        ID = procId,
+                        Name = procName,
+                        Windows = new Dictionary<long, SnapshotWindow>()
                     };
 
                     if (proc.ID != -1 && !snapList.ContainsKey(proc.ID))
@@ -75,7 +78,26 @@ namespace ActivityTracker.OSX
                         snapList.Add(proc.ID, proc);
                     }
                 }
+                else 
+                {
+                    var winId = Convert.ToInt64(parts[4]);
+                    var winName = parts[5];
+
+                    var win = new SnapshotWindow
+                    {
+                        ID = winId,
+                        Name = winName,
+                    };
+
+                    var proc = snapList[procId];
+
+                    if (win.ID != -1 && !proc.Windows.ContainsKey(win.ID))
+                    {
+                        proc.Windows.Add(win.ID, win);
+                    }
+                }
             }
+            
             return snapList;
         }
 
@@ -96,7 +118,7 @@ namespace ActivityTracker.OSX
             return new Snapshot
             {
                 Time = DateTime.Now,
-                Process = Execute(allWindowsScript),
+                Processes = Execute(allWindowsScript),
                 ActiveWindow = ParseActiveWindow()
             };
         }
