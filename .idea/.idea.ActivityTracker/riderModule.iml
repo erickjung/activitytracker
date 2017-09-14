@@ -5,13 +5,14 @@
       <sourceFolder url="file://$MODULE_DIR$/../../ActivityTracker" isTestSource="false" />
       <sourceFolder url="file://$MODULE_DIR$/../../ActivityTracker.OSX" isTestSource="false" />
       <sourceFolder url="file://$MODULE_DIR$/../../ActivityTracker.Test.CLI" isTestSource="false" />
-      <sourceFolder url="file://$MODULE_DIR$/../../ActivityTracker.Windows" isTestSource="false" />
+      <sourceFolder url="file://$MODULE_DIR$/../../ActivityTracker.Test.CLISimple" isTestSource="false" />
+      <sourceFolder url="file://$MODULE_DIR$/../../ActivityTracker.Windows/ActivityTracker.Windows.csproj" isTestSource="false" />
       <excludeFolder url="file://$MODULE_DIR$/../../ActivityTracker.OSX/bin" />
       <excludeFolder url="file://$MODULE_DIR$/../../ActivityTracker.OSX/obj" />
       <excludeFolder url="file://$MODULE_DIR$/../../ActivityTracker.Test.CLI/bin" />
       <excludeFolder url="file://$MODULE_DIR$/../../ActivityTracker.Test.CLI/obj" />
-      <excludeFolder url="file://$MODULE_DIR$/../../ActivityTracker.Windows/bin" />
-      <excludeFolder url="file://$MODULE_DIR$/../../ActivityTracker.Windows/obj" />
+      <excludeFolder url="file://$MODULE_DIR$/../../ActivityTracker.Test.CLISimple/bin" />
+      <excludeFolder url="file://$MODULE_DIR$/../../ActivityTracker.Test.CLISimple/obj" />
       <excludeFolder url="file://$MODULE_DIR$/../../ActivityTracker/bin" />
       <excludeFolder url="file://$MODULE_DIR$/../../ActivityTracker/obj" />
       <excludeFolder url="file://$MODULE_DIR$/../../packages" />
