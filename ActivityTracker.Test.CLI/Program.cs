@@ -10,7 +10,7 @@ namespace ActivityTracker.Test.CLI
             var t = new Tracker();
             var snapShot = t.Now();
 
-            Console.WriteLine("--- ALL PROCESS AND WINDOWS ---");
+            Console.WriteLine("--- ALL PROCESS AND WINDOWS AT {0} ---", snapShot.Time);
             foreach (var snap in snapShot.Processes)
             {
                 Console.WriteLine("PROC: {0} - {1}", snap.Value.Id, snap.Value.Name);
