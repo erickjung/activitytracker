@@ -4,6 +4,6 @@
     <TargetFramework>netcoreapp2.0</TargetFramework>
   </PropertyGroup>
   <ItemGroup>
-    <ProjectReference Include="..\ActivityTracker.OSX\ActivityTracker.OSX.csproj" />
+    <ProjectReference Include="..\Platforms\ActivityTracker.OSX\ActivityTracker.OSX.csproj" />
   </ItemGroup>
 </Project>
