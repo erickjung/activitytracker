@@ -1,0 +1,33 @@
+<html>
+<head>
+    <script type="text/javascript" src="https://www.gstatic.com/charts/loader.js"></script>
+    <script type="text/javascript">
+        google.charts.load("current", {packages: ["timeline"]});
+        google.charts.setOnLoadCallback(drawChart);
+        function drawChart() {
+
+            var container = document.getElementById('timeline');
+            var chart = new google.visualization.Timeline(container);
+            var dataTable = new google.visualization.DataTable();
+            dataTable.addColumn({type: 'string', id: 'Proc'});
+            dataTable.addColumn({type: 'date', id: 'Start'});
+            dataTable.addColumn({type: 'date', id: 'End'});
+            dataTable.addRows([
+                ['Finder', new Date(0, 0, 0, 12, 0, 0), new Date(0, 0, 0, 13, 30, 0)],
+                ['Finder', new Date(0, 0, 0, 14, 0, 0), new Date(0, 0, 0, 15, 30, 0)],
+                ['Google Chrome', new Date(0, 0, 0, 16, 0, 0), new Date(0, 0, 0, 17, 30, 0)],
+                ['Google Chrome', new Date(0, 0, 0, 16, 30, 0), new Date(0, 0, 0, 21, 0, 0)]]);
+
+            var options = {
+                timeline: {colorByRowLabel: true}
+            };
+
+            chart.draw(dataTable, options);
+        }
+
+    </script>
+</head>
+<body>
+<div id="timeline" style="height: 580px;"></div>
+</body>
+</html>
