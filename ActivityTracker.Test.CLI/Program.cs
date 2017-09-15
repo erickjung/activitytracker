@@ -25,11 +25,27 @@ namespace ActivityTracker.Test.CLI
             File.WriteAllText(outFile, JsonConvert.SerializeObject(list));
         }
 
+        private static void SaveActive(Snapshot snap, string outFile)
+        {
+            if (File.Exists(outFile))
+            {
+                var json = File.ReadAllText(outFile);
+                var newSnap = JsonConvert.DeserializeObject<List<SnapshotProcess>>(json);
+
+                newSnap.Add(snap.Processes[snap.ActiveWindow]);
+                File.WriteAllText(outFile, JsonConvert.SerializeObject(newSnap));
+                return;
+            }
+
+            var list = new List<SnapshotProcess> {snap.Processes[snap.ActiveWindow]};
+            File.WriteAllText(outFile, JsonConvert.SerializeObject(list));
+        }
+
         static void Main()
         {
             var t = new Tracker();    
             var snap = t.Now();
-            SaveSnapshot(snap, OutputFile);
+            SaveActive(snap, OutputFile);
             Console.WriteLine("Processes saved at {0}", snap.Time);
         }
     }
