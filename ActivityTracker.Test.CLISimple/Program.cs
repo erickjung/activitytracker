@@ -14,7 +14,7 @@ namespace ActivityTracker.Test.CLISimple
         private static async Task MainAsync(string[] args)
         {
             var t = new Tracker();
-            var snapShot = await t.Now();
+            var snapShot = await t.Now(TrackerOptions.FullProcess);
 
             Console.WriteLine("--- ALL PROCESS AND WINDOWS AT {0} ---", snapShot.Time);
             foreach (var snap in snapShot.Processes)

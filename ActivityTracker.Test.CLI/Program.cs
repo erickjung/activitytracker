@@ -50,7 +50,7 @@ namespace ActivityTracker.Test.CLI
             File.WriteAllText(outFile, JsonConvert.SerializeObject(list));
         }
 
-        private static void ConvertJsonToHTML(string jsonFile, string outputHtml)
+        private static void ConvertJsonToHTML(string jsonFile, int interval, string outputHtml)
         {
             if (File.Exists(jsonFile))
             {
@@ -62,19 +62,20 @@ namespace ActivityTracker.Test.CLI
                 {
                     var current = snapList[i];
                     var start = current.Time;
-                    var end = start.AddSeconds(5);
+                    var end = start.AddMilliseconds(interval);
 
-                    for (var j = i + 1; j < snapList.Count; j++)
+                    for (var j = i + 1; j < snapList.Count; j++, i++)
+                    {
                         if (j < snapList.Count - 1)
                         {
                             var next = snapList[j];
                             if (!next.ActiveProcess.Name.Equals(current.ActiveProcess.Name))
                             {
-                                end = next.Time.AddSeconds(5);
-                                i = j;
                                 break;
                             }
+                            end = next.Time.AddMilliseconds(interval);
                         }
+                    }
 
                     snapInfo += $"['{current.ActiveProcess.Name}', new Date(\"{start}\"), new Date(\"{end}\")],";
                 }
@@ -95,7 +96,8 @@ namespace ActivityTracker.Test.CLI
             if (args.Length == 0)
             {
                 Console.WriteLine("ActivityTracker sample");
-                Console.WriteLine("parameters: [track outfile] or [convert jsonfile outfile]");
+                Console.WriteLine(
+                    "parameters: [track outfile interval(milliseconds)] or [convert jsonfile jsoninterval outfile]");
                 return;
             }
 
@@ -105,18 +107,25 @@ namespace ActivityTracker.Test.CLI
                     case "track":
                     {
                         var fileJson = args[i + 1];
+                        var interval = int.Parse(args[i + 2]);
+
+                        Console.WriteLine("Presse CTRLˆC to finish");
 
                         var track = new Tracker();
-                        var snap = await track.Now();
-                        SaveSnapshot(snap, fileJson);
-                        Console.WriteLine("Snapshot saved at {0}", snap.Time);
-                        break;
+                        do
+                        {
+                            var snap = await track.Now(TrackerOptions.ActiveProcess);
+                            SaveSnapshot(snap, fileJson);
+                            Console.WriteLine("Snapshot saved at {0}", snap.Time);
+                            await Task.Delay(interval);
+                        } while (true);
                     }
                     case "convert":
                     {
                         var fileJson = args[i + 1];
-                        var fileHtml = args[i + 2];
-                        ConvertJsonToHTML(fileJson, fileHtml);
+                        var interval = int.Parse(args[i + 2]);
+                        var fileHtml = args[i + 3];
+                        ConvertJsonToHTML(fileJson, interval, fileHtml);
                         Console.WriteLine("Html saved");
                         break;
                     }

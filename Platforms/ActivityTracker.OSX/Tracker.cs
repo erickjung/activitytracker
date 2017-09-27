@@ -32,12 +32,12 @@ namespace ActivityTracker.OSX
                                                    "   log \"PROCESS|\" & (id of proc) & \"|\" & (name of proc)\n" +
                                                    "end try";
 
-        public Task<Snapshot> Now()
+        public Task<Snapshot> Now(TrackerOptions options)
         {
             return Task.Run(() => new Snapshot
             {
                 Time = DateTime.Now,
-                Processes = Execute(AllWindowsScript),
+                Processes = options == TrackerOptions.FullProcess ? Execute(AllWindowsScript) : null,
                 ActiveProcess = ParseActiveWindow()
             });
         }

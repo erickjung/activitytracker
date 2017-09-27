@@ -2,8 +2,14 @@
 
 namespace ActivityTracker
 {
+    public enum TrackerOptions
+    {
+        FullProcess,
+        ActiveProcess
+    }
+    
     public interface ITracker
     {
-        Task<Snapshot> Now();
+        Task<Snapshot> Now(TrackerOptions options);
     }
 }
