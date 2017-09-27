@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Diagnostics;
 using System.IO;
 using System.Linq;
+using System.Threading.Tasks;
 
 namespace ActivityTracker.OSX
 {
@@ -31,6 +32,16 @@ namespace ActivityTracker.OSX
                                                    "   log \"PROCESS|\" & (id of proc) & \"|\" & (name of proc)\n" +
                                                    "end try";
 
+        public Task<Snapshot> Now()
+        {
+            return Task.Run(() => new Snapshot
+            {
+                Time = DateTime.Now,
+                Processes = Execute(AllWindowsScript),
+                ActiveProcess = ParseActiveWindow()
+            });
+        }
+
         private Dictionary<long, SnapshotProcess> Execute(string command)
         {
             var process = new Process
@@ -57,9 +68,7 @@ namespace ActivityTracker.OSX
                 var parts = line.Split('|');
 
                 if (parts.Length < 2)
-                {
                     throw new InvalidDataException();
-                }
 
                 var procId = Convert.ToInt64(parts[1]);
                 var procName = parts[2];
@@ -74,9 +83,7 @@ namespace ActivityTracker.OSX
                     };
 
                     if (proc.Id != -1 && !snapList.ContainsKey(proc.Id))
-                    {
                         snapList.Add(proc.Id, proc);
-                    }
                 }
                 else
                 {
@@ -92,9 +99,7 @@ namespace ActivityTracker.OSX
                     var proc = snapList[procId];
 
                     if (win.Id != -1 && !proc.Windows.ContainsKey(win.Id))
-                    {
                         proc.Windows.Add(win.Id, win);
-                    }
                 }
             }
 
@@ -105,16 +110,6 @@ namespace ActivityTracker.OSX
         {
             var list = Execute(ActiveWindowsScript);
             return list.Count <= 0 ? null : list.First().Value;
-        }
-
-        public Snapshot Now()
-        {
-            return new Snapshot
-            {
-                Time = DateTime.Now,
-                Processes = Execute(AllWindowsScript),
-                ActiveProcess = ParseActiveWindow()
-            };
         }
     }
 }

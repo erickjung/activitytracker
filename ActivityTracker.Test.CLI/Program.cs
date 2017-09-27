@@ -1,14 +1,13 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.IO;
-using System.Threading;
 using System.Threading.Tasks;
 using ActivityTracker.OSX;
 using Newtonsoft.Json;
 
 namespace ActivityTracker.Test.CLI
 {
-    class Program
+    internal class Program
     {
         private const string HtmlHead = "<html>" +
                                         "<head>" +
@@ -66,7 +65,6 @@ namespace ActivityTracker.Test.CLI
                     var end = start.AddSeconds(5);
 
                     for (var j = i + 1; j < snapList.Count; j++)
-                    {
                         if (j < snapList.Count - 1)
                         {
                             var next = snapList[j];
@@ -77,7 +75,6 @@ namespace ActivityTracker.Test.CLI
                                 break;
                             }
                         }
-                    }
 
                     snapInfo += $"['{current.ActiveProcess.Name}', new Date(\"{start}\"), new Date(\"{end}\")],";
                 }
@@ -88,12 +85,12 @@ namespace ActivityTracker.Test.CLI
             }
         }
 
-        static void Main(string[] args)
+        private static void Main(string[] args)
         {
             MainAsync(args).GetAwaiter().GetResult();
         }
 
-        static async Task MainAsync(string[] args)
+        private static async Task MainAsync(string[] args)
         {
             if (args.Length == 0)
             {
@@ -103,7 +100,6 @@ namespace ActivityTracker.Test.CLI
             }
 
             for (var i = 0; i < args.Length; i++)
-            {
                 switch (args[i])
                 {
                     case "track":
@@ -111,7 +107,7 @@ namespace ActivityTracker.Test.CLI
                         var fileJson = args[i + 1];
 
                         var track = new Tracker();
-                        var snap = track.Now();
+                        var snap = await track.Now();
                         SaveSnapshot(snap, fileJson);
                         Console.WriteLine("Snapshot saved at {0}", snap.Time);
                         break;
@@ -125,7 +121,6 @@ namespace ActivityTracker.Test.CLI
                         break;
                     }
                 }
-            }
         }
     }
 }

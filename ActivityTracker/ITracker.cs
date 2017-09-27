@@ -1,7 +1,9 @@
-﻿namespace ActivityTracker
+﻿using System.Threading.Tasks;
+
+namespace ActivityTracker
 {
     public interface ITracker
     {
-        Snapshot Now();
+        Task<Snapshot> Now();
     }
 }

@@ -1,10 +1,13 @@
-﻿namespace ActivityTracker.Windows
+﻿using System;
+using System.Threading.Tasks;
+
+namespace ActivityTracker.Windows
 {
     public class Tracker : ITracker
     {
-        public Snapshot Now()
+        public Task<Snapshot> Now()
         {
-            throw new System.NotImplementedException();
+            throw new NotImplementedException();
         }
     }
 }
