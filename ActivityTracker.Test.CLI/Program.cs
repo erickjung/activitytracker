@@ -79,12 +79,10 @@ namespace ActivityTracker.Test.CLI
                         }
                     }
 
-                    snapInfo += string.Format("['{0}', new Date(\"{1}\"), new Date(\"{2}\")],",
-                        current.ActiveProcess.Name,
-                        start, end);
+                    snapInfo += $"['{current.ActiveProcess.Name}', new Date(\"{start}\"), new Date(\"{end}\")],";
                 }
 
-                var html = string.Format("{0}{1}{2}", HtmlHead, snapInfo, HtmlBottom);
+                var html = $"{HtmlHead}{snapInfo}{HtmlBottom}";
 
                 File.WriteAllText(outputHtml, html);
             }
