@@ -101,10 +101,10 @@ namespace ActivityTracker.OSX
             return snapList;
         }
 
-        private long ParseActiveWindow()
+        private SnapshotProcess ParseActiveWindow()
         {
             var list = Execute(ActiveWindowsScript);
-            return list.Count <= 0 ? -1 : list.First().Value.Id;
+            return list.Count <= 0 ? null : list.First().Value;
         }
 
         public Snapshot Now()
@@ -113,7 +113,7 @@ namespace ActivityTracker.OSX
             {
                 Time = DateTime.Now,
                 Processes = Execute(AllWindowsScript),
-                ActiveWindow = ParseActiveWindow()
+                ActiveProcess = ParseActiveWindow()
             };
         }
     }
