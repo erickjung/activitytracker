@@ -44,9 +44,9 @@ namespace ActivityTracker.OSX
 
         private Dictionary<long, SnapshotProcess> Execute(string command)
         {
-            var process = new Process
+            using (var process = new Process())
             {
-                StartInfo = new ProcessStartInfo
+                process.StartInfo = new ProcessStartInfo
                 {
                     FileName = "osascript",
                     UseShellExecute = false,
@@ -54,56 +54,56 @@ namespace ActivityTracker.OSX
                     RedirectStandardInput = true,
                     RedirectStandardOutput = true,
                     RedirectStandardError = true
-                }
-            };
+                };
+                
+                process.Start();
+                process.StandardInput.Write(command);
+                process.StandardInput.Close();
 
-            process.Start();
-            process.StandardInput.Write(command);
-            process.StandardInput.Close();
-
-            var snapList = new Dictionary<long, SnapshotProcess>();
-            while (!process.StandardError.EndOfStream)
-            {
-                var line = process.StandardError.ReadLine();
-                var parts = line.Split('|');
-
-                if (parts.Length < 2)
-                    throw new InvalidDataException();
-
-                var procId = Convert.ToInt64(parts[1]);
-                var procName = parts[2];
-
-                if (parts.Length < 4)
+                var snapList = new Dictionary<long, SnapshotProcess>();
+                while (!process.StandardError.EndOfStream)
                 {
-                    var proc = new SnapshotProcess
+                    var line = process.StandardError.ReadLine();
+                    var parts = line.Split('|');
+
+                    if (parts.Length < 2)
+                        throw new InvalidDataException();
+
+                    var procId = Convert.ToInt64(parts[1]);
+                    var procName = parts[2];
+
+                    if (parts.Length < 4)
                     {
-                        Id = procId,
-                        Name = procName,
-                        Windows = new Dictionary<long, SnapshotWindow>()
-                    };
+                        var proc = new SnapshotProcess
+                        {
+                            Id = procId,
+                            Name = procName,
+                            Windows = new Dictionary<long, SnapshotWindow>()
+                        };
 
-                    if (proc.Id != -1 && !snapList.ContainsKey(proc.Id))
-                        snapList.Add(proc.Id, proc);
-                }
-                else
-                {
-                    var winId = Convert.ToInt64(parts[4]);
-                    var winName = parts[5];
-
-                    var win = new SnapshotWindow
+                        if (proc.Id != -1 && !snapList.ContainsKey(proc.Id))
+                            snapList.Add(proc.Id, proc);
+                    }
+                    else
                     {
-                        Id = winId,
-                        Name = winName
-                    };
+                        var winId = Convert.ToInt64(parts[4]);
+                        var winName = parts[5];
 
-                    var proc = snapList[procId];
+                        var win = new SnapshotWindow
+                        {
+                            Id = winId,
+                            Name = winName
+                        };
 
-                    if (win.Id != -1 && !proc.Windows.ContainsKey(win.Id))
-                        proc.Windows.Add(win.Id, win);
+                        var proc = snapList[procId];
+
+                        if (win.Id != -1 && !proc.Windows.ContainsKey(win.Id))
+                            proc.Windows.Add(win.Id, win);
+                    }
                 }
+
+                return snapList;
             }
-
-            return snapList;
         }
 
         private SnapshotProcess ParseActiveWindow()
