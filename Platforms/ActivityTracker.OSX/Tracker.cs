@@ -102,6 +102,7 @@ namespace ActivityTracker.OSX
                     }
                 }
 
+                process.WaitForExit();
                 return snapList;
             }
         }
