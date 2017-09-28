@@ -52,13 +52,13 @@ namespace ActivityTracker.OSX
                     UseShellExecute = false,
                     CreateNoWindow = true,
                     RedirectStandardInput = true,
-                    RedirectStandardOutput = true,
                     RedirectStandardError = true
                 };
                 
                 process.Start();
                 process.StandardInput.Write(command);
                 process.StandardInput.Close();
+                process.StandardInput.Dispose();
 
                 var snapList = new Dictionary<long, SnapshotProcess>();
                 while (!process.StandardError.EndOfStream)

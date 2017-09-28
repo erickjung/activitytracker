@@ -69,11 +69,11 @@ namespace ActivityTracker.Test.CLI
                         if (j < snapList.Count - 1)
                         {
                             var next = snapList[j];
+                            end = next.Time;
                             if (!next.ActiveProcess.Name.Equals(current.ActiveProcess.Name))
                             {
                                 break;
                             }
-                            end = next.Time.AddMilliseconds(interval);
                         }
                     }
 
@@ -110,14 +110,16 @@ namespace ActivityTracker.Test.CLI
                         var interval = int.Parse(args[i + 2]);
 
                         Console.WriteLine("Presse CTRLˆC to finish");
+                        var count = 0;
 
                         var track = new Tracker();
                         do
                         {
                             var snap = await track.Now(TrackerOptions.ActiveProcess);
                             SaveSnapshot(snap, fileJson);
-                            Console.WriteLine("Snapshot saved at {0}", snap.Time);
+                            Console.WriteLine("{0} - Snapshot saved at {1}", count, snap.Time);
                             await Task.Delay(interval);
+                            count++;
                         } while (true);
                     }
                     case "convert":
