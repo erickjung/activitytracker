@@ -11,42 +11,75 @@ namespace ActivityTracker.Test.CLI
 {
     internal class Program
     {
-        private const string HtmlTemplate = "<html>" +
-                                            "<head>" +
-                                            "<script type=\"text/javascript\" src=\"https://www.gstatic.com/charts/loader.js\"></script>" +
-                                            "<script type=\"text/javascript\">" +
-                                            "google.charts.load(\"current\", {packages: [\"timeline\", \"bar\"]});" +
-                                            "google.charts.setOnLoadCallback(drawChart);" +
-                                            "function drawChart() {" +
-                                            "var container = document.getElementById('timeline');" +
-                                            "var chart = new google.visualization.Timeline(container);" +
-                                            "var dataTable = new google.visualization.DataTable();" +
-                                            "dataTable.addColumn({type: 'string', id: 'Proc'});" +
-                                            "dataTable.addColumn({type: 'date', id: 'Start'});" +
-                                            "dataTable.addColumn({type: 'date', id: 'End'});" +
-                                            "dataTable.addRows([" +
-                                            "{TIMELINE_DATA}" +
-                                            "]);" +
-                                            "var options = {" +
-                                            "timeline: {colorByRowLabel: true}" +
-                                            "};" +
-                                            "chart.draw(dataTable, options);" +
-                                            "var dataBar = google.visualization.arrayToDataTable([" +
-                                            "['Process', 'Count']," +
-                                            "{BAR_DATA}" +
-                                            "]);" +
-                                            "var optionsBar = {" +
-                                            "bars: 'horizontal'};" +
-                                            "var chartBar = new google.charts.Bar(document.getElementById('barchart'));" +
-                                            "chartBar.draw(dataBar, google.charts.Bar.convertOptions(optionsBar));" +
-                                            "}</script></head>" +
+        private const string HtmlTemplate = "<head>" +
+                                            "    <script type=\"text/javascript\" src=\"https://www.gstatic.com/charts/loader.js\"></script>" +
+                                            "    <script type=\"text/javascript\">" +
+                                            "        google.charts.load(\"current\", {packages: [\"timeline\", \"bar\", \"corechart\"]});" +
+                                            "        google.charts.setOnLoadCallback(drawChart);" +
+                                            "        function drawChart() {" +
+                                            "            var dataPie = google.visualization.arrayToDataTable([" +
+                                            "            ['Process', 'Count']," +
+                                            "            {PIE_DATA}" +
+                                            "            ]);" +
+                                            "            var optionsPie = {" +
+                                            "                legend: 'none'" +
+                                            "            };" +
+                                            "            var chartPie = new google.visualization.PieChart(document.getElementById('piechart'));" +
+                                            "            chartPie.draw(dataPie, optionsPie);" +
+                                            "            var dataBar = new google.visualization.arrayToDataTable([" +
+                                            "            ['Process', 'Count']," +
+                                            "            {BAR_DATA}" +
+                                            "            ]);" +
+                                            "            var optionsBar = {" +
+                                            "                bars: 'horizontal'," +
+                                            "                legend: { position: 'none' }" +
+                                            "            };" +
+                                            "            var chartBar = new google.charts.Bar(document.getElementById('barchart'));" +
+                                            "            chartBar.draw(dataBar, optionsBar);" +
+                                            "            var dataTimeline = new google.visualization.DataTable();" +
+                                            "            dataTimeline.addColumn({type: 'string', id: 'Proc'});" +
+                                            "            dataTimeline.addColumn({type: 'date', id: 'Start'});" +
+                                            "            dataTimeline.addColumn({type: 'date', id: 'End'});" +
+                                            "            dataTimeline.addRows([" +
+                                            "            {TIMELINE_DATA}                " +
+                                            "            ]);" +
+                                            "            var optionsTimeline = {" +
+                                            "                timeline: {colorByRowLabel: true}" +
+                                            "            };" +
+                                            "            var chartTimeline = new google.visualization.Timeline(document.getElementById('timelinechart'));" +
+                                            "            chartTimeline.draw(dataTimeline, optionsTimeline);" +
+                                            "        }" +
+                                            "    </script>" +
+                                            "</head>" +
                                             "<body>" +
-                                            "<h3>Process count</h3>" +
-                                            "<div id=\"barchart\" style=\"width: 700px; height: 300px;\"></div>" +
-                                            "<h3>Process timeline</h3>" +
-                                            "<div id=\"timeline\" style=\"height: 580px;\"></div>" +
-                                            "</body>" +
-                                            "</html>";
+                                            "<div style=\"padding-top: 10px;text-align: center;height: 65px;font-weight: bold;\">{TITLE_DATA}</div>" +
+                                            "<div style=\"display: flex;max-width: 1280px;margin: 0 auto;flex-flow: row wrap;\">" +
+                                            "    <div style=\"display: flex;width: 500px;margin: 7px;background-color: #ffffff;box-shadow: 0 0 10px 0 rgba(110, 123, 140, 0.3);flex-flow: column wrap;flex: auto;\">" +
+                                            "        <div style=\"padding: 0 20px;\">" +
+                                            "            <h5>Process usage %</h5>" +
+                                            "        </div>" +
+                                            "        <div class=\"card-img\">" +
+                                            "            <div id=\"piechart\" style=\"height: 320px;\"></div>" +
+                                            "        </div>" +
+                                            "    </div>" +
+                                            "    <div style=\"display: flex;width: 500px;margin: 7px;background-color: #ffffff;box-shadow: 0 0 10px 0 rgba(110, 123, 140, 0.3);flex-flow: column wrap;flex: auto;\">" +
+                                            "        <div style=\"padding: 0 20px;\">" +
+                                            "            <h5>Process usage count</h5>" +
+                                            "        </div>" +
+                                            "        <div class=\"card-img\">" +
+                                            "            <div id=\"barchart\" style=\"height: 320px;\"></div>" +
+                                            "        </div>" +
+                                            "    </div>" +
+                                            "    <div style=\"display: flex;width: 500px;margin: 7px;background-color: #ffffff;box-shadow: 0 0 10px 0 rgba(110, 123, 140, 0.3);flex-flow: column wrap;flex: auto;\">" +
+                                            "        <div style=\"padding: 0 20px;\">" +
+                                            "            <h5>Process usage timeline</h5>" +
+                                            "        </div>" +
+                                            "        <div class=\"card-img\">" +
+                                            "            <div id=\"timelinechart\" style=\"height: 500px;\"></div>" +
+                                            "        </div>" +
+                                            "    </div>" +
+                                            "</div>" +
+                                            "</body>";
 
 
         private static string ParseTemplate(IReadOnlyDictionary<string, string> parameters, string template)
@@ -76,11 +109,11 @@ namespace ActivityTracker.Test.CLI
                 list[snap.ActiveProcess.Name] += 1;
                 return;
             }
-            
+
             list.Add(snap.ActiveProcess.Name, 1);
         }
 
-        
+
         private static void ConvertJsonToHTML(string jsonFile, int interval, string outputHtml)
         {
             if (File.Exists(jsonFile))
@@ -96,7 +129,7 @@ namespace ActivityTracker.Test.CLI
                     var start = current.Time;
                     var end = start.AddMilliseconds(interval);
                     CountData(ref dataDetails, current);
-                    
+
                     for (var j = i + 1; j < snapList.Count; j++, i++)
                     {
                         var next = snapList[j];
@@ -115,16 +148,18 @@ namespace ActivityTracker.Test.CLI
                 }
 
                 var dataDetailsSorted = from entry in dataDetails orderby entry.Value descending select entry;
-                var barInfo = dataDetailsSorted.Aggregate("", (current, dataDetail) => current + $"['{dataDetail.Key}', {dataDetail.Value}],");
+                var barInfo = dataDetailsSorted.Aggregate("",
+                    (current, dataDetail) => current + $"['{dataDetail.Key}', {dataDetail.Value}],");
 
                 var parameters = new Dictionary<string, string>
                 {
-                    {"{TIMELINE_DATA}", timelineInfo},
-                    {"{BAR_DATA}", barInfo}
+                    {"{TITLE_DATA}", $"ActivityTracker Report ({DateTime.Now})"},
+                    {"{PIE_DATA}", barInfo},
+                    {"{BAR_DATA}", barInfo},
+                    {"{TIMELINE_DATA}", timelineInfo}
                 };
 
                 File.WriteAllText(outputHtml, ParseTemplate(parameters, HtmlTemplate));
-
             }
         }
 
