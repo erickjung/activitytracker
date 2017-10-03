@@ -4,7 +4,7 @@
     <TargetFramework>netcoreapp2.0</TargetFramework>
   </PropertyGroup>
   <ItemGroup>
-    <ProjectReference Include="..\Platforms\ActivityTracker.OSX\ActivityTracker.OSX.csproj" />
+    <ProjectReference Include="..\ActivityTracker.OSX\ActivityTracker.OSX.csproj" />
   </ItemGroup>
   <ItemGroup>
     <PackageReference Include="Newtonsoft.Json" Version="10.0.3" />

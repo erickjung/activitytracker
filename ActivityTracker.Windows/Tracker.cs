@@ -20,7 +20,6 @@
 // OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION WITH THE 
 // SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 
-using System;
 using System.Threading.Tasks;
 
 namespace ActivityTracker.Windows
@@ -29,7 +28,7 @@ namespace ActivityTracker.Windows
     {
         public Task<Snapshot> Now(TrackerOptions options)
         {
-            throw new NotImplementedException();
+            throw new System.NotImplementedException();
         }
     }
 }

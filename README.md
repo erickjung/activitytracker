@@ -2,7 +2,7 @@
 
 ## What is ActivityTracker?
 
-ActivityTracker is an open-source and cross-platform .NET library used to track every dekstop OS process in a moment at time. It was initialy created to play with .NET Core and .NET Standard 2 and with a very straightforwad API, you can easyly integrate at your application.
+ActivityTracker is an open-source and cross-platform .NET library used to track every dekstop OS process at a moment in time. It was initialy created to play with .NET Core and .NET Standard 2 and with a very straightforwad API, you can easyly integrate at your application.
 
 ## What you can do?
 
