@@ -27,7 +27,7 @@ How to use:
    ```
 
 Output:
-![Report Example](/docs/report_example.png)
+![Report Example](/Docs/report_example.png)
 
 
 ## Plans
