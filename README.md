@@ -38,9 +38,9 @@ We are at a very early stage of this lib, but if you want to help, please report
 ## Roadmap
 
 - OSX Support - DONE
-- Nuget Package - In Progress
-- Windows Support - In Progress
-- Linux Support - Planned
+- Nuget Package - planned
+- Windows Support - planned
+- Linux Support - planned
 
 ## License
 
